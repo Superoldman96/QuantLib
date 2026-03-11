@@ -4503,6 +4503,9 @@
     <ClInclude Include="ql\pricingengines\basket\operatorsplittingspreadengine.hpp">
       <Filter>pricingengines\basket</Filter>
     </ClInclude>
+    <ClInclude Include="ql\pricingengines\basket\pearsonspreadengine.hpp">
+      <Filter>pricingengines\basket</Filter>
+    </ClInclude>
     <ClInclude Include="ql\pricingengines\basket\singlefactorbsmbasketengine.hpp">
       <Filter>pricingengines\basket</Filter>
     </ClInclude>
@@ -7331,6 +7334,9 @@
       <Filter>pricingengines\basket</Filter>
     </ClCompile>
     <ClCompile Include="ql\pricingengines\basket\operatorsplittingspreadengine.cpp">
+      <Filter>pricingengines\basket</Filter>
+    </ClCompile>
+    <ClCompile Include="ql\pricingengines\basket\pearsonspreadengine.cpp">
       <Filter>pricingengines\basket</Filter>
     </ClCompile>
     <ClCompile Include="ql\pricingengines\basket\singlefactorbsmbasketengine.cpp">

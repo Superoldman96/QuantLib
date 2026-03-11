@@ -682,6 +682,7 @@ set(QL_SOURCES
     pricingengines/basket/mcamericanbasketengine.cpp
     pricingengines/basket/mceuropeanbasketengine.cpp
     pricingengines/basket/operatorsplittingspreadengine.cpp
+    pricingengines/basket/pearsonspreadengine.cpp
     pricingengines/basket/singlefactorbsmbasketengine.cpp
     pricingengines/basket/spreadblackscholesvanillaengine.cpp
     pricingengines/basket/stulzengine.cpp
@@ -1906,6 +1907,7 @@ set(QL_HEADERS
     pricingengines/basket/mcamericanbasketengine.hpp
     pricingengines/basket/mceuropeanbasketengine.hpp
     pricingengines/basket/operatorsplittingspreadengine.hpp
+    pricingengines/basket/pearsonspreadengine.hpp
     pricingengines/basket/singlefactorbsmbasketengine.hpp
     pricingengines/basket/spreadblackscholesvanillaengine.hpp
     pricingengines/basket/stulzengine.hpp
