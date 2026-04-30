@@ -132,9 +132,9 @@ namespace QuantLib {
 
         n_ = valueDates_.size() - 1;
 
-        interestDates_ = vector<Date>(valueDates_.begin(), valueDates_.end());
-        interestDates_.front() = std::max(interestDates_.front(), rateCalcStartDate);
-        interestDates_.back() = std::min(interestDates_.back(), rateCalcEndDate);
+        interestDates_ = valueDates_;
+        interestDates_.front() = rateCalcStartDate;
+        interestDates_.back() = rateCalcEndDate;
 
         if (fixingDays_ == overnightIndex->fixingDays() && fixingDays_ == 0) {
             fixingDates_ = vector<Date>(valueDates_.begin(), valueDates_.end() - 1);
