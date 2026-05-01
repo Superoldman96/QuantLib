@@ -36,13 +36,25 @@ namespace QuantLib {
     }
 
     Array G2Process::initialValues() const {
-        return { x0_, y0_ };
+        Real z1_0 = termStructure_.empty() ? x0_ : phi(0.0);
+        return { z1_0, y0_ };
     }
 
-    Array G2Process::drift(Time t, const Array& x) const {
+    Array G2Process::drift(Time t, const Array& z) const {
+        // Drift in shifted coordinates z1 = x + phi(t), z2 = y:
+        //   dz1 = (-a*z1 + a*phi(t) + phi'(t)) dt + sigma dW1
+        //   dz2 = -b*z2 dt + eta dW2
+        Real shiftDrift = 0.0;
+        if (!termStructure_.empty()) {
+            const Real h = 1.0e-4;
+            Real phi_t  = phi(t);
+            Real phi_th = phi(t + h);
+            Real phiPrime = (phi_th - phi_t) / h;
+            shiftDrift = a_ * phi_t + phiPrime;
+        }
         return {
-            xProcess_->drift(t, x[0]),
-            yProcess_->drift(t, x[1])
+            xProcess_->drift(t, z[0]) + shiftDrift,
+            yProcess_->drift(t, z[1])
         };
     }
 
@@ -62,11 +74,18 @@ namespace QuantLib {
         return tmp;
     }
 
-    Array G2Process::expectation(Time t0, const Array& x0,
+    Array G2Process::expectation(Time t0, const Array& z0,
                                  Time dt) const {
+        // E[z1(t0+dt) | z1(t0)] = z1(t0)*exp(-a*dt)
+        //                       + phi(t0+dt) - phi(t0)*exp(-a*dt)
+        // E[z2(t0+dt) | z2(t0)] = z2(t0)*exp(-b*dt)
+        Real shiftExp = 0.0;
+        if (!termStructure_.empty()) {
+            shiftExp = phi(t0 + dt) - phi(t0) * std::exp(-a_ * dt);
+        }
         return {
-            xProcess_->expectation(t0, x0[0], dt),
-            yProcess_->expectation(t0, x0[1], dt)
+            xProcess_->expectation(t0, z0[0], dt) + shiftExp,
+            yProcess_->expectation(t0, z0[1], dt)
         };
     }
 
@@ -100,7 +119,7 @@ namespace QuantLib {
     }
 
     Real G2Process::x0() const {
-        return x0_;
+        return termStructure_.empty() ? x0_ : phi(0.0);
     }
 
     Real G2Process::y0() const {
@@ -140,8 +159,9 @@ namespace QuantLib {
         return 0.5*temp1*temp1 + 0.5*temp2*temp2 + rho_*temp1*temp2 + forward;
     }
 
-    Rate G2Process::shortRate(Time t, Real x, Real y) const {
-        return x + y + phi(t);
+    Rate G2Process::shortRate(Time, Real z1, Real z2) const {
+        // The simulated state already includes phi(t) in z1, so r = z1 + z2.
+        return z1 + z2;
     }
 
 
@@ -159,13 +179,22 @@ namespace QuantLib {
     }
 
     Array G2ForwardProcess::initialValues() const {
-        return { x0_, y0_ };
+        Real z1_0 = termStructure_.empty() ? x0_ : phi(0.0);
+        return { z1_0, y0_ };
     }
 
-    Array G2ForwardProcess::drift(Time t, const Array& x) const {
+    Array G2ForwardProcess::drift(Time t, const Array& z) const {
+        Real shiftDrift = 0.0;
+        if (!termStructure_.empty()) {
+            const Real h = 1.0e-4;
+            Real phi_t  = phi(t);
+            Real phi_th = phi(t + h);
+            Real phiPrime = (phi_th - phi_t) / h;
+            shiftDrift = a_ * phi_t + phiPrime;
+        }
         return {
-            xProcess_->drift(t, x[0]) + xForwardDrift(t, T_),
-            yProcess_->drift(t, x[1]) + yForwardDrift(t, T_)
+            xProcess_->drift(t, z[0]) + xForwardDrift(t, T_) + shiftDrift,
+            yProcess_->drift(t, z[1]) + yForwardDrift(t, T_)
         };
     }
 
@@ -178,11 +207,15 @@ namespace QuantLib {
         return tmp;
     }
 
-    Array G2ForwardProcess::expectation(Time t0, const Array& x0,
+    Array G2ForwardProcess::expectation(Time t0, const Array& z0,
                                         Time dt) const {
+        Real shiftExp = 0.0;
+        if (!termStructure_.empty()) {
+            shiftExp = phi(t0 + dt) - phi(t0) * std::exp(-a_ * dt);
+        }
         return {
-            xProcess_->expectation(t0, x0[0], dt) - Mx_T(t0, t0+dt, T_),
-            yProcess_->expectation(t0, x0[1], dt) - My_T(t0, t0+dt, T_)
+            xProcess_->expectation(t0, z0[0], dt) - Mx_T(t0, t0+dt, T_) + shiftExp,
+            yProcess_->expectation(t0, z0[1], dt) - My_T(t0, t0+dt, T_)
         };
     }
 
@@ -259,8 +292,8 @@ namespace QuantLib {
         return 0.5*temp1*temp1 + 0.5*temp2*temp2 + rho_*temp1*temp2 + forward;
     }
 
-    Rate G2ForwardProcess::shortRate(Time t, Real x, Real y) const {
-        return x + y + phi(t);
+    Rate G2ForwardProcess::shortRate(Time, Real z1, Real z2) const {
+        return z1 + z2;
     }
 
 }

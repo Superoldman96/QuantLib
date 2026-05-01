@@ -31,7 +31,21 @@
 namespace QuantLib {
 
     //! %G2 stochastic process
-    /*! \ingroup processes */
+    /*! Simulates the two-factor G2++ process with state shifted so that
+        the two simulated components sum to the short rate, i.e. the state
+        is \f$ (z_1, z_2) = (x + \varphi(t),\, y) \f$, where \f$ x \f$ and
+        \f$ y \f$ are the underlying zero-mean OU factors and
+        \f$ \varphi(t) \f$ is the deterministic offset that fits the
+        initial term structure. As a consequence, sample paths produced by
+        a path generator built on this process satisfy
+        \f$ r(t_i) = \mathrm{state}[0]_i + \mathrm{state}[1]_i \f$ and have
+        curve-consistent expectation \f$ \varphi(t_i) \f$.
+
+        If an empty term-structure handle is passed, the process degenerates
+        to a pair of zero-mean OU processes (\f$ \varphi \equiv 0 \f$).
+
+        \ingroup processes
+    */
     class G2Process : public StochasticProcess {
       public:
         G2Process(const Handle<YieldTermStructure>& termStructure,
@@ -64,7 +78,13 @@ namespace QuantLib {
     };
 
     //! %Forward %G2 stochastic process
-    /*! \ingroup processes */
+    /*! Forward-measure counterpart of G2Process. The simulated state is
+        again shifted so that \f$ \mathrm{state}[0] + \mathrm{state}[1] = r(t) \f$,
+        on top of the usual T-forward convexity adjustments to the drift
+        and the conditional expectation.
+
+        \ingroup processes
+    */
     class G2ForwardProcess : public ForwardMeasureProcess {
       public:
         G2ForwardProcess(const Handle<YieldTermStructure>& termStructure,
