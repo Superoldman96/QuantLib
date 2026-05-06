@@ -329,11 +329,11 @@ struct CommonVarsONLeg {
 };
 
 #define CHECK_OIS_COUPON_RESULT(what, calculated, expected, tolerance)   \
-    if (std::fabs(calculated-expected) > tolerance) { \
+    if (std::fabs((calculated)-(expected)) > tolerance) {               \
         BOOST_ERROR("Failed to reproduce " what ":" \
                     << "\n    expected:   " << std::setprecision(12) << expected \
                     << "\n    calculated: " << std::setprecision(12) << calculated \
-                    << "\n    error:      " << std::setprecision(12) << std::fabs(calculated-expected)); \
+                    << "\n    error:      " << std::setprecision(12) << std::fabs((calculated)-(expected))); \
     }
 
 BOOST_AUTO_TEST_CASE(testPastCouponRate) {
