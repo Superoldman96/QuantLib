@@ -1877,7 +1877,7 @@ BOOST_AUTO_TEST_CASE(testErrorWhenCurveNullOrTooNarrow) {
     BOOST_CHECK_NO_THROW(coupon->rate());
 }
 
-BOOST_AUTO_TEST_CASE(testAccruedAmountTradingExCouponAfterAccrualEndDate) {
+BOOST_AUTO_TEST_CASE(testExCouponAccruedAmountAroundAccrualEndDate) {
     BOOST_TEST_MESSAGE("Test ex-coupon accrued amount around the accrual end date...");
     CommonVars vars(Date(26, March, 2026));
     vars.forecastCurve.linkTo(flatRate(0.04, Actual360()));
@@ -1890,6 +1890,20 @@ BOOST_AUTO_TEST_CASE(testAccruedAmountTradingExCouponAfterAccrualEndDate) {
     CHECK_OIS_COUPON_RESULT("exCoupon accrued amount", coupon->accruedAmount(Date(30, March, 2027)), -0.01134, 1e-5);
     CHECK_OIS_COUPON_RESULT("exCoupon accrued amount", coupon->accruedAmount(Date(31, March, 2027)), 0.0, 1e-12);
     CHECK_OIS_COUPON_RESULT("exCoupon accrued amount", coupon->accruedAmount(Date(1, April, 2027)), 0.0, 1e-12);
+}
+
+BOOST_AUTO_TEST_CASE(testAccruedAmountExCouponDateAfterAccrualEndDate) {
+    BOOST_TEST_MESSAGE("Test ex-coupon accrued amount when ex-coupon date is after the accrual end date...");
+    CommonVars vars(Date(26, March, 2026));
+    vars.forecastCurve.linkTo(flatRate(0.04, Actual360()));
+    // set exCouponDate after accrualEndDate and before paymentDate
+    // to ensure averageRate handles dates after the last interest date
+    const auto exCpnDate = Date(1, April, 2027);
+    auto coupon = vars.makeCoupon(Date(31, March, 2026), Date(31, March, 2027), 0, 0, false, true,
+                                  RateAveraging::Compound, Date(2, April, 2027), 100.0, DayCounter(),
+                                  Date(), Date(), exCpnDate);
+    BOOST_CHECK(coupon->tradingExCoupon(exCpnDate));
+    CHECK_OIS_COUPON_RESULT("exCoupon accrued amount", coupon->accruedAmount(exCpnDate), 0.0, 1e-12);
 }
 
 BOOST_AUTO_TEST_CASE(testAccruedAmountInAdvance) {
