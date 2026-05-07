@@ -675,6 +675,9 @@
     <ClInclude Include="ql\indexes\ibor\mosprime.hpp">
       <Filter>indexes\ibor</Filter>
     </ClInclude>
+    <ClInclude Include="ql\indexes\ibor\noknibor.hpp">
+      <Filter>indexes\ibor</Filter>
+    </ClInclude>
     <ClInclude Include="ql\indexes\ibor\nzdlibor.hpp">
       <Filter>indexes\ibor</Filter>
     </ClInclude>
@@ -2877,6 +2880,9 @@
     <ClInclude Include="ql\time\calendars\china.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
+    <ClInclude Include="ql\time\calendars\croatia.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
     <ClInclude Include="ql\time\calendars\czechrepublic.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
@@ -2907,6 +2913,9 @@
     <ClInclude Include="ql\time\calendars\indonesia.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
+    <ClInclude Include="ql\time\calendars\islamicholidays.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
     <ClInclude Include="ql\time\calendars\israel.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
@@ -2919,10 +2928,19 @@
     <ClInclude Include="ql\time\calendars\jointcalendar.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
+    <ClInclude Include="ql\time\calendars\malta.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
     <ClInclude Include="ql\time\calendars\mexico.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
+    <ClInclude Include="ql\time\calendars\montenegro.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
     <ClInclude Include="ql\time\calendars\newzealand.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
+    <ClInclude Include="ql\time\calendars\northmacedonia.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
     <ClInclude Include="ql\time\calendars\norway.hpp">
@@ -2943,10 +2961,16 @@
     <ClInclude Include="ql\time\calendars\saudiarabia.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
+    <ClInclude Include="ql\time\calendars\serbia.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
     <ClInclude Include="ql\time\calendars\singapore.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
     <ClInclude Include="ql\time\calendars\slovakia.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
+    <ClInclude Include="ql\time\calendars\slovenia.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
     <ClInclude Include="ql\time\calendars\southafrica.hpp">
@@ -2980,6 +3004,9 @@
       <Filter>time\calendars</Filter>
     </ClInclude>
     <ClInclude Include="ql\time\calendars\unitedstates.hpp">
+      <Filter>time\calendars</Filter>
+    </ClInclude>
+    <ClInclude Include="ql\time\calendars\uzbekistan.hpp">
       <Filter>time\calendars</Filter>
     </ClInclude>
     <ClInclude Include="ql\time\calendars\weekendsonly.hpp">
@@ -6158,6 +6185,9 @@
     <ClCompile Include="ql\time\calendars\china.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
+    <ClCompile Include="ql\time\calendars\croatia.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
     <ClCompile Include="ql\time\calendars\czechrepublic.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
@@ -6188,6 +6218,9 @@
     <ClCompile Include="ql\time\calendars\indonesia.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
+    <ClCompile Include="ql\time\calendars\islamicholidays.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
     <ClCompile Include="ql\time\calendars\israel.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
@@ -6200,10 +6233,19 @@
     <ClCompile Include="ql\time\calendars\jointcalendar.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
+    <ClCompile Include="ql\time\calendars\malta.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
     <ClCompile Include="ql\time\calendars\mexico.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
+    <ClCompile Include="ql\time\calendars\montenegro.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
     <ClCompile Include="ql\time\calendars\newzealand.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
+    <ClCompile Include="ql\time\calendars\northmacedonia.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
     <ClCompile Include="ql\time\calendars\norway.cpp">
@@ -6221,10 +6263,16 @@
     <ClCompile Include="ql\time\calendars\saudiarabia.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
+    <ClCompile Include="ql\time\calendars\serbia.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
     <ClCompile Include="ql\time\calendars\singapore.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
     <ClCompile Include="ql\time\calendars\slovakia.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
+    <ClCompile Include="ql\time\calendars\slovenia.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
     <ClCompile Include="ql\time\calendars\southafrica.cpp">
@@ -6258,6 +6306,9 @@
       <Filter>time\calendars</Filter>
     </ClCompile>
     <ClCompile Include="ql\time\calendars\unitedstates.cpp">
+      <Filter>time\calendars</Filter>
+    </ClCompile>
+    <ClCompile Include="ql\time\calendars\uzbekistan.cpp">
       <Filter>time\calendars</Filter>
     </ClCompile>
     <ClCompile Include="ql\time\calendars\weekendsonly.cpp">
