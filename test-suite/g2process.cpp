@@ -67,8 +67,8 @@ BOOST_AUTO_TEST_CASE(testG2ProcessDriftIncludesTermStructure) {
 
     const Real a = 0.1, sigma = 0.01, b = 0.2, eta = 0.013, rho = -0.5;
 
-    G2Process paramOnly(Handle<YieldTermStructure>(), a, sigma, b, eta, rho);
-    G2Process withCurve(makeFlatCurve(0.04), a, sigma, b, eta, rho);
+    G2Process paramOnly(a, sigma, b, eta, rho);
+    G2Process withCurve(a, sigma, b, eta, rho, makeFlatCurve(0.04));
 
     const Time t = 1.5;
     Array z(2);
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessPhiAndShortRate) {
     const Rate flatRate = 0.03;
     Handle<YieldTermStructure> curve = makeFlatCurve(flatRate);
 
-    G2Process process(curve, a, sigma, b, eta, rho);
+    G2Process process(a, sigma, b, eta, rho, curve);
 
     const Time times[] = { 0.25, 1.0, 5.0, 10.0 };
 
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessPhiMatchesG2Model) {
     const Real a = 0.12, sigma = 0.011, b = 0.17, eta = 0.009, rho = -0.3;
     Handle<YieldTermStructure> curve = makeFlatCurve(0.025);
 
-    G2Process process(curve, a, sigma, b, eta, rho);
+    G2Process process(a, sigma, b, eta, rho, curve);
     G2 model(curve, a, sigma, b, eta, rho);
     ext::shared_ptr<TwoFactorModel::ShortRateDynamics> dyn = model.dynamics();
     BOOST_REQUIRE(dyn);
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessExpectationConsistentWithCurve) {
     const Real a = 0.1, sigma = 0.01, b = 0.2, eta = 0.013, rho = -0.4;
     Handle<YieldTermStructure> curve = makeFlatCurve(0.035);
 
-    G2Process process(curve, a, sigma, b, eta, rho);
+    G2Process process(a, sigma, b, eta, rho, curve);
     Array iv = process.initialValues();
 
     const Real tol = 1e-12;
@@ -220,7 +220,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessPhiRequiresTermStructure) {
     BOOST_TEST_MESSAGE(
         "Testing that G2Process::phi throws without a term structure...");
 
-    G2Process process(Handle<YieldTermStructure>(), 0.1, 0.01, 0.2, 0.013, -0.5);
+    G2Process process(0.1, 0.01, 0.2, 0.013, -0.5);
     BOOST_CHECK(process.termStructure().empty());
     BOOST_CHECK_THROW(process.phi(1.0), Error);
 
@@ -249,7 +249,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessObservesTermStructure) {
     Handle<YieldTermStructure> curve(ext::make_shared<FlatForward>(
         0, TARGET(), Handle<Quote>(rate), Actual365Fixed()));
 
-    G2Process process(curve, a, sigma, b, eta, rho);
+    G2Process process(a, sigma, b, eta, rho, curve);
 
     const Time t = 2.0;
     Real phiBefore = process.phi(t);
@@ -275,7 +275,7 @@ BOOST_AUTO_TEST_CASE(testG2ProcessPathGeneratorMatchesCurve) {
     const Real a = 0.1, sigma = 0.01, b = 0.2, eta = 0.013, rho = -0.3;
     Handle<YieldTermStructure> curve = makeFlatCurve(0.03);
 
-    auto process = ext::make_shared<G2Process>(curve, a, sigma, b, eta, rho);
+    auto process = ext::make_shared<G2Process>(a, sigma, b, eta, rho, curve);
 
     const Time horizon = 5.0;
     const Size steps = 50;
@@ -317,7 +317,7 @@ BOOST_AUTO_TEST_CASE(testG2ForwardProcessPhiAndShortRate) {
     const Real a = 0.1, sigma = 0.01, b = 0.2, eta = 0.013, rho = -0.5;
     Handle<YieldTermStructure> curve = makeFlatCurve(0.035);
 
-    G2ForwardProcess fwd(curve, a, sigma, b, eta, rho);
+    G2ForwardProcess fwd(a, sigma, b, eta, rho, curve);
 
     const Real tol = 1e-12;
     for (Time t : {0.25, 1.0, 5.0}) {
@@ -338,7 +338,7 @@ BOOST_AUTO_TEST_CASE(testG2ForwardProcessPhiAndShortRate) {
     }
 
     // Without a curve, phi() throws but shortRate() still works.
-    G2ForwardProcess paramOnly(Handle<YieldTermStructure>(), a, sigma, b, eta, rho);
+    G2ForwardProcess paramOnly(a, sigma, b, eta, rho);
     BOOST_CHECK(paramOnly.termStructure().empty());
     BOOST_CHECK_THROW(paramOnly.phi(1.0), Error);
     BOOST_CHECK_NO_THROW(paramOnly.shortRate(1.0, 0.01, 0.01));

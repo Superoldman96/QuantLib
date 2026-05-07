@@ -22,8 +22,8 @@
 
 namespace QuantLib {
 
-    G2Process::G2Process(const Handle<YieldTermStructure>& termStructure,
-                         Real a, Real sigma, Real b, Real eta, Real rho)
+    G2Process::G2Process(Real a, Real sigma, Real b, Real eta, Real rho,
+                         const Handle<YieldTermStructure>& termStructure)
     : a_(a), sigma_(sigma), b_(b), eta_(eta), rho_(rho),
       xProcess_(new QuantLib::OrnsteinUhlenbeckProcess(a, sigma, 0.0)),
       yProcess_(new QuantLib::OrnsteinUhlenbeckProcess(b, eta, 0.0)),
@@ -165,8 +165,8 @@ namespace QuantLib {
     }
 
 
-    G2ForwardProcess::G2ForwardProcess(const Handle<YieldTermStructure>& termStructure,
-                                       Real a, Real sigma, Real b, Real eta, Real rho)
+    G2ForwardProcess::G2ForwardProcess(Real a, Real sigma, Real b, Real eta, Real rho,
+                                       const Handle<YieldTermStructure>& termStructure)
     : a_(a), sigma_(sigma), b_(b), eta_(eta), rho_(rho),
       xProcess_(new QuantLib::OrnsteinUhlenbeckProcess(a, sigma, 0.0)),
       yProcess_(new QuantLib::OrnsteinUhlenbeckProcess(b, eta, 0.0)),
