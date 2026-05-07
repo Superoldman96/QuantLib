@@ -32,7 +32,7 @@ namespace QuantLib {
         Month m = date.month();
 
         if (isWeekend(w)
-            // New Yearâ€™s Day
+            // New Year's Day
             || (d == 1 && m == January)
             // New Year Holiday
             || (d == 2 && m == January)
