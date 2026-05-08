@@ -49,7 +49,7 @@ namespace QuantLib {
     class G2Process : public StochasticProcess {
       public:
         G2Process(Real a, Real sigma, Real b, Real eta, Real rho,
-                  const Handle<YieldTermStructure>& termStructure = {}});
+                  const Handle<YieldTermStructure>& termStructure = {});
         //! \name StochasticProcess interface
         //@{
         Size size() const override;
