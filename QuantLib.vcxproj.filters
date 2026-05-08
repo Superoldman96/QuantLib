@@ -1092,6 +1092,9 @@
     <ClInclude Include="ql\math\interpolations\extrapolation.hpp">
       <Filter>math\interpolations</Filter>
     </ClInclude>
+    <ClInclude Include="ql\math\interpolations\flatextrapolation.hpp">
+      <Filter>math\interpolations</Filter>
+    </ClInclude>
     <ClInclude Include="ql\math\interpolations\flatextrapolation2d.hpp">
       <Filter>math\interpolations</Filter>
     </ClInclude>
