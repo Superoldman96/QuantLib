@@ -49,8 +49,7 @@ namespace QuantLib {
     class G2Process : public StochasticProcess {
       public:
         G2Process(Real a, Real sigma, Real b, Real eta, Real rho,
-                  const Handle<YieldTermStructure>& termStructure
-                      = Handle<YieldTermStructure>());
+                  const Handle<YieldTermStructure>& termStructure = {}});
         //! \name StochasticProcess interface
         //@{
         Size size() const override;
@@ -89,8 +88,7 @@ namespace QuantLib {
     class G2ForwardProcess : public ForwardMeasureProcess {
       public:
         G2ForwardProcess(Real a, Real sigma, Real b, Real eta, Real rho,
-                         const Handle<YieldTermStructure>& termStructure
-                             = Handle<YieldTermStructure>());
+                         const Handle<YieldTermStructure>& termStructure = {});
         //! \name StochasticProcess interface
         //@{
         Size size() const override;
