@@ -223,9 +223,9 @@ void setup() {
     coefficients[0]= c;
     coefficients[1]= b;
     coefficients[2]= a;
-    costFunctions_.emplace_back(ext::make_shared<OneDimensionalPolynomialDegreeN>(coefficients));
+    costFunctions_.push_back(ext::make_shared<OneDimensionalPolynomialDegreeN>(coefficients));
     // Set constraint for optimizers: unconstrained problem
-    constraints_.emplace_back(ext::make_shared<NoConstraint>());
+    constraints_.push_back(ext::make_shared<NoConstraint>());
     // Set initial guess for optimizer
     Array initialValue(1);
     initialValue[0] = -100;
