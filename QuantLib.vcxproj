@@ -831,7 +831,7 @@
     <ClInclude Include="ql\indexes\ibor\kofr.hpp" />
     <ClInclude Include="ql\indexes\ibor\libor.hpp" />
     <ClInclude Include="ql\indexes\ibor\mosprime.hpp" />
-    <ClInclude Include="ql\indexes\ibor\noknibor.hpp" />
+    <ClInclude Include="ql\indexes\ibor\nibor.hpp" />
     <ClInclude Include="ql\indexes\ibor\nzdlibor.hpp" />
     <ClInclude Include="ql\indexes\ibor\nzocr.hpp" />
     <ClInclude Include="ql\indexes\ibor\pribor.hpp" />

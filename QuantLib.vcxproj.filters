@@ -675,7 +675,7 @@
     <ClInclude Include="ql\indexes\ibor\mosprime.hpp">
       <Filter>indexes\ibor</Filter>
     </ClInclude>
-    <ClInclude Include="ql\indexes\ibor\noknibor.hpp">
+    <ClInclude Include="ql\indexes\ibor\nibor.hpp">
       <Filter>indexes\ibor</Filter>
     </ClInclude>
     <ClInclude Include="ql\indexes\ibor\nzdlibor.hpp">
