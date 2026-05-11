@@ -1,8 +1,7 @@
 /* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 /*
- Copyright (C) 2000, 2001, 2002, 2003 RiskMap srl
- Copyright (C) 2003, 2004, 2005, 2006 StatPro Italia srl
+ Copyright (C) 2026 SoftSolution srl
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -18,12 +17,12 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file noknibor.hpp
+/*! \file nibor.hpp
     \brief NOK-NIBOR index
 */
 
-#ifndef quantext_noknibor_hpp
-#define quantext_noknibor_hpp
+#ifndef quantext_nibor_hpp
+#define quantext_nibor_hpp
 
 #include <ql/currencies/europe.hpp>
 #include <ql/indexes/iborindex.hpp>
@@ -39,13 +38,11 @@ namespace QuantLib {
         https://finansfag.no/wp-content/uploads/2024/10/Rentekonvensjon-6.0_engelsk_oppdatert-18.09.2024_final.pdf
         https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5099269
 
-        \remark Using Norway calendar, should be Oslo.
-
         \warning Check roll convention and EOM.
     */
-    class NOKNibor : public IborIndex {
+    class Nibor : public IborIndex {
       public:
-        NOKNibor(const Period &tenor, const Handle<YieldTermStructure> &h = Handle<YieldTermStructure>())
+        Nibor(const Period &tenor, const Handle<YieldTermStructure> &h = Handle<YieldTermStructure>())
         : IborIndex("NOK-NIBOR", tenor, 2, NOKCurrency(), Norway(), ModifiedFollowing, false, Actual360(), h) {}
     };
 

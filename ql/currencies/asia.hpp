@@ -332,7 +332,7 @@ namespace QuantLib {
     };
 
     //! Uzbekistani Som
-    /*! The ISO three-letter code is UZS; there numeric code is 860.
+    /*! The ISO three-letter code is UZS; there the numeric code is 860.
      It is divided into 100 tiyin.
      \ingroup currencies
     */

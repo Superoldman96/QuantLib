@@ -1278,7 +1278,7 @@ set(QL_HEADERS
     indexes/ibor/kofr.hpp
     indexes/ibor/libor.hpp
     indexes/ibor/mosprime.hpp
-    indexes/ibor/noknibor.hpp
+    indexes/ibor/nibor.hpp
     indexes/ibor/nzdlibor.hpp
     indexes/ibor/nzocr.hpp
     indexes/ibor/pribor.hpp
