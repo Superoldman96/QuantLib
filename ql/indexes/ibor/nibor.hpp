@@ -21,8 +21,8 @@
     \brief NOK-NIBOR index
 */
 
-#ifndef quantext_nibor_hpp
-#define quantext_nibor_hpp
+#ifndef quantlib_nibor_hpp
+#define quantlib_nibor_hpp
 
 #include <ql/currencies/europe.hpp>
 #include <ql/indexes/iborindex.hpp>
