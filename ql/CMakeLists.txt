@@ -900,6 +900,7 @@ set(QL_SOURCES
     time/calendars/canada.cpp
     time/calendars/chile.cpp
     time/calendars/china.cpp
+    time/calendars/croatia.cpp
     time/calendars/czechrepublic.cpp
     time/calendars/denmark.cpp
     time/calendars/finland.cpp
@@ -910,19 +911,25 @@ set(QL_SOURCES
     time/calendars/iceland.cpp
     time/calendars/india.cpp
     time/calendars/indonesia.cpp
+    time/calendars/islamicholidays.cpp
     time/calendars/israel.cpp
     time/calendars/italy.cpp
     time/calendars/japan.cpp
     time/calendars/jointcalendar.cpp
+    time/calendars/malta.cpp
     time/calendars/mexico.cpp
+    time/calendars/montenegro.cpp
     time/calendars/newzealand.cpp
+    time/calendars/northmacedonia.cpp
     time/calendars/norway.cpp
     time/calendars/poland.cpp
     time/calendars/romania.cpp
     time/calendars/russia.cpp
     time/calendars/saudiarabia.cpp
+    time/calendars/serbia.cpp
     time/calendars/singapore.cpp
     time/calendars/slovakia.cpp
+    time/calendars/slovenia.cpp
     time/calendars/southafrica.cpp
     time/calendars/southkorea.cpp
     time/calendars/sweden.cpp
@@ -934,6 +941,7 @@ set(QL_SOURCES
     time/calendars/ukraine.cpp
     time/calendars/unitedkingdom.cpp
     time/calendars/unitedstates.cpp
+    time/calendars/uzbekistan.cpp
     time/calendars/weekendsonly.cpp
     time/date.cpp
     time/dategenerationrule.cpp
@@ -1270,6 +1278,7 @@ set(QL_HEADERS
     indexes/ibor/kofr.hpp
     indexes/ibor/libor.hpp
     indexes/ibor/mosprime.hpp
+    indexes/ibor/nibor.hpp
     indexes/ibor/nzdlibor.hpp
     indexes/ibor/nzocr.hpp
     indexes/ibor/pribor.hpp
@@ -2191,6 +2200,7 @@ set(QL_HEADERS
     time/calendars/canada.hpp
     time/calendars/chile.hpp
     time/calendars/china.hpp
+    time/calendars/croatia.hpp
     time/calendars/czechrepublic.hpp
     time/calendars/denmark.hpp
     time/calendars/finland.hpp
@@ -2201,20 +2211,26 @@ set(QL_HEADERS
     time/calendars/iceland.hpp
     time/calendars/india.hpp
     time/calendars/indonesia.hpp
+    time/calendars/islamicholidays.hpp
     time/calendars/israel.hpp
     time/calendars/italy.hpp
     time/calendars/japan.hpp
     time/calendars/jointcalendar.hpp
+    time/calendars/malta.hpp
     time/calendars/mexico.hpp
+    time/calendars/montenegro.hpp
     time/calendars/newzealand.hpp
+    time/calendars/northmacedonia.hpp
     time/calendars/norway.hpp
     time/calendars/nullcalendar.hpp
     time/calendars/poland.hpp
     time/calendars/romania.hpp
     time/calendars/russia.hpp
     time/calendars/saudiarabia.hpp
+    time/calendars/serbia.hpp
     time/calendars/singapore.hpp
     time/calendars/slovakia.hpp
+    time/calendars/slovenia.hpp
     time/calendars/southafrica.hpp
     time/calendars/southkorea.hpp
     time/calendars/sweden.hpp
@@ -2226,6 +2242,7 @@ set(QL_HEADERS
     time/calendars/ukraine.hpp
     time/calendars/unitedkingdom.hpp
     time/calendars/unitedstates.hpp
+    time/calendars/uzbekistan.hpp
     time/calendars/weekendsonly.hpp
     time/date.hpp
     time/dategenerationrule.hpp
