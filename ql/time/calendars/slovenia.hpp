@@ -62,7 +62,7 @@ namespace QuantLib {
         enum Market {
             LSE    //!< Ljubljana stock exchange
         };
-        Slovenia(Market m = LSE);
+        explicit Slovenia(Market m = LSE);
     };
 
 }

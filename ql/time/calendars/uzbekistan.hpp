@@ -58,9 +58,9 @@ namespace QuantLib {
         enum Market {
             UZSE, //!< Uzbekistan Stock Exchange
         };
-        Uzbekistan(Market market = UZSE);
+        explicit Uzbekistan(Market market = UZSE);
     };
 
 }
 
-#endif // quantlib_uzbekistan_calendar_hpp
+#endif

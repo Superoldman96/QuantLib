@@ -74,10 +74,10 @@ namespace QuantLib {
         enum Market {
             MSE //!< Malta Stock Exchange
         };
-        Malta(Market market = MSE);
+        explicit Malta(Market market = MSE);
     };
 
 }
 
 
-#endif // quantlib_malta_calendar_hpp
+#endif

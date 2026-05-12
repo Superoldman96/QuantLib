@@ -60,9 +60,9 @@ namespace QuantLib {
         enum Market {
             MSE //!< Macedonian Stock Exchange
         };
-        NorthMacedonia(Market m = MSE);
+        explicit NorthMacedonia(Market m = MSE);
     };
 
 }
 
-#endif // quantlib_northmacedonia_calendar_hpp
+#endif

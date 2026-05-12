@@ -57,9 +57,9 @@ namespace QuantLib {
         enum Market {
             MNSE //!< Montenegro Stock Exchange
         };
-        Montenegro(Market m = MNSE);
+        explicit Montenegro(Market m = MNSE);
     };
 
 }
 
-#endif // quantlib_montenegro_calendar_hpp
+#endif

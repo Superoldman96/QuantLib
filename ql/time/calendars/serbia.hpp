@@ -56,10 +56,10 @@ namespace QuantLib {
         enum Market {
             BSE    //!< Belgrade stock exchange
         };
-        Serbia(Market m = BSE);
+        explicit Serbia(Market m = BSE);
     };
 
 }
 
 
-#endif // quantlib_serbia_calendar_hpp
+#endif

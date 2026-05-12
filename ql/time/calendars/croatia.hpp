@@ -63,10 +63,10 @@ namespace QuantLib {
         enum Market {
             ZSE    //!< Zagreb stock exchange
         };
-        Croatia(Market m = ZSE);
+        explicit Croatia(Market m = ZSE);
     };
 
 }
 
 
-#endif // quantlib_croatia_calendar_hpp
+#endif

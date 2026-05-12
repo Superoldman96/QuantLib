@@ -34,15 +34,15 @@ namespace QuantLib {
     //! NOK-NIBOR index
     /*! NOK-NIBOR rate published by Oslo Boers.
         See <http://www.oslobors.no/ob_eng>.
-        https://nore-benchmarks.com/
-        https://finansfag.no/wp-content/uploads/2024/10/Rentekonvensjon-6.0_engelsk_oppdatert-18.09.2024_final.pdf
-        https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5099269
+        <https://nore-benchmarks.com/>,
+        <https://finansfag.no/wp-content/uploads/2024/10/Rentekonvensjon-6.0_engelsk_oppdatert-18.09.2024_final.pdf>,
+        <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5099269>.
 
         \warning Check roll convention and EOM.
     */
     class Nibor : public IborIndex {
       public:
-        Nibor(const Period &tenor, const Handle<YieldTermStructure> &h = Handle<YieldTermStructure>())
+        explicit Nibor(const Period &tenor, const Handle<YieldTermStructure>& h = {})
         : IborIndex("NOK-NIBOR", tenor, 2, NOKCurrency(), Norway(), ModifiedFollowing, false, Actual360(), h) {}
     };
 
