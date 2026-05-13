@@ -1510,6 +1510,7 @@
     <ClInclude Include="ql\pricingengines\basket\mcamericanbasketengine.hpp" />
     <ClInclude Include="ql\pricingengines\basket\mceuropeanbasketengine.hpp" />
     <ClInclude Include="ql\pricingengines\basket\operatorsplittingspreadengine.hpp" />
+    <ClInclude Include="ql\pricingengines\basket\pearsonspreadengine.hpp" />
     <ClInclude Include="ql\pricingengines\basket\singlefactorbsmbasketengine.hpp" />
     <ClInclude Include="ql\pricingengines\basket\spreadblackscholesvanillaengine.hpp" />
     <ClInclude Include="ql\pricingengines\basket\stulzengine.hpp" />
@@ -2611,6 +2612,7 @@
     <ClCompile Include="ql\pricingengines\basket\mcamericanbasketengine.cpp" />
     <ClCompile Include="ql\pricingengines\basket\mceuropeanbasketengine.cpp" />
     <ClCompile Include="ql\pricingengines\basket\operatorsplittingspreadengine.cpp" />
+    <ClCompile Include="ql\pricingengines\basket\pearsonspreadengine.cpp" />
     <ClCompile Include="ql\pricingengines\basket\singlefactorbsmbasketengine.cpp" />
     <ClCompile Include="ql\pricingengines\basket\spreadblackscholesvanillaengine.cpp" />
     <ClCompile Include="ql\pricingengines\basket\stulzengine.cpp" />
