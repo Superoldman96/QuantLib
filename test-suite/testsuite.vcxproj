@@ -686,6 +686,9 @@
     <ClCompile Include="convertiblebonds.cpp" />
     <ClCompile Include="covariance.cpp" />
     <ClCompile Include="creditdefaultswap.cpp" />
+    <ClCompile Include="constnotionalcrosscurrencybasisswap.cpp" />
+    <ClCompile Include="constnotionalcrosscurrencyfixedvsfloatingswap.cpp" />
+    <ClCompile Include="constnotionalcrosscurrencyswap.cpp" />
     <ClCompile Include="crosscurrencyratehelpers.cpp" />
     <ClCompile Include="currency.cpp" />
     <ClCompile Include="curvestates.cpp" />
