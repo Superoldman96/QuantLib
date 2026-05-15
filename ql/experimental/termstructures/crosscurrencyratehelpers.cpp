@@ -24,7 +24,7 @@
 #include <ql/cashflows/simplecashflow.hpp>
 #include <ql/cashflows/fixedratecoupon.hpp>
 #include <ql/experimental/termstructures/crosscurrencyratehelpers.hpp>
-#include <ql/pricingengines/swap/constnotionalcrossccyswapengine.hpp>
+#include <ql/pricingengines/swap/discountingconstnotionalcrosscurrencyswapengine.hpp>
 #include <ql/utilities/null_deleter.hpp>
 #include <utility>
 
@@ -448,8 +448,8 @@ namespace QuantLib {
         Schedule floatSch = legSchedule(evaluationDate_, tenor_, floatFreqPeriod, fixingDays_, floatIndex_->fixingCalendar(),
                                     floatIndex_->businessDayConvention(), endOfMonth_);
 
-        xccySwap_ = ext::make_shared<ConstNotionalCrossCcyFixFloatSwap>(
-            ConstNotionalCrossCcyFixFloatSwap::Type::Payer,
+        xccySwap_ = ext::make_shared<ConstNotionalCrossCurrencyFixedVsFloatingSwap>(
+            Swap::Payer,
             nominal,
             Currency(), 
             fixedSch,
@@ -467,7 +467,7 @@ namespace QuantLib {
             paymentLag_,
             calendar_
         );
-        auto engine = ext::make_shared<ConstNotionalCrossCcySwapEngine>(
+        auto engine = ext::make_shared<DiscountingConstNotionalCrossCurrencySwapEngine>(
             floatIndex_->currency(), floatingLegDiscountHandle(),
             Currency(), fixedLegDiscountHandle(),
             makeQuoteHandle(1.0), true);

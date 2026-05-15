@@ -3,7 +3,6 @@
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
  Copyright (C) 2025 Paolo D'Elia
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -19,14 +18,12 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file constnotionalcrossccyswap.hpp
-    \brief Swap instrument with legs involving two currencies
-
-        \ingroup instruments
+/*! \file constnotionalcrosscurrencyswap.hpp
+    \brief Generic constant-notional cross currency swap
 */
 
-#ifndef quantlib_cross_ccy_swap_hpp
-#define quantlib_cross_ccy_swap_hpp
+#ifndef quantlib_cross_currency_swap_hpp
+#define quantlib_cross_currency_swap_hpp
 
 #include <ql/currency.hpp>
 #include <ql/instruments/swap.hpp>
@@ -35,16 +32,16 @@
 
 namespace QuantLib {
 
-//! Constant-notional cross currency swap
+//! Generic constant-notional cross currency swap
 /*! The notional amounts are constant and exchanged at inception and maturity.
 
     The first leg holds the pay currency cashflows and second leg holds
     the receive currency cashflows.
 
-        \ingroup instruments
+    \ingroup instruments
 */
-class ConstNotionalCrossCcySwap : public Swap {
-public:
+class ConstNotionalCrossCurrencySwap : public Swap {
+  public:
     class arguments;
     class results;
     class engine;
@@ -62,7 +59,7 @@ public:
         \note The notional amounts, payment schedules, and other details of each leg must be
             set up in the provided Leg objects before constructing the swap.
     */
-    ConstNotionalCrossCcySwap(const Leg& firstLeg, const Currency& firstLegCcy, const Leg& secondLeg, const Currency& secondLegCcy);
+    ConstNotionalCrossCurrencySwap(const Leg& firstLeg, const Currency& firstLegCcy, const Leg& secondLeg, const Currency& secondLegCcy);
     //! Constructs a cross-currency swap with multiple legs and their respective currencies
     /*!
         Initializes a cross-currency swap with an arbitrary number of legs, each specified
@@ -79,7 +76,7 @@ public:
         \warning The notional amounts, payment schedules, and other details of each leg must be
                 set up in the provided Leg objects before constructing the swap.
     */
-    ConstNotionalCrossCcySwap(const std::vector<Leg>& legs, const std::vector<bool>& payer, const std::vector<Currency>& currencies);
+    ConstNotionalCrossCurrencySwap(const std::vector<Leg>& legs, const std::vector<bool>& payer, const std::vector<Currency>& currencies);
     //@}
     //! \name Instrument interface
     //@{
@@ -114,7 +111,7 @@ protected:
     /*! This constructor can be used by derived classes that will
         build their legs themselves.
     */
-    explicit ConstNotionalCrossCcySwap(Size legs);
+    explicit ConstNotionalCrossCurrencySwap(Size legs);
     //@}
     //! \name Instrument interface
     //@{
@@ -127,30 +124,33 @@ protected:
 
     std::vector<Currency> currencies_;
 
-private:
+  private:
     mutable std::vector<Real> inCcyLegNPV_;
     mutable std::vector<Real> inCcyLegBPS_;
     mutable std::vector<DiscountFactor> npvDateDiscounts_;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcySwap::arguments : public Swap::arguments {
-public:
+
+class ConstNotionalCrossCurrencySwap::arguments : public Swap::arguments {
+  public:
     std::vector<Currency> currencies;
     void validate() const override;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcySwap::results : public Swap::results {
-public:
+
+class ConstNotionalCrossCurrencySwap::results : public Swap::results {
+  public:
     std::vector<Real> inCcyLegNPV;
     std::vector<Real> inCcyLegBPS;
     std::vector<DiscountFactor> npvDateDiscounts;
     void reset() override;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcySwap::engine : public GenericEngine<ConstNotionalCrossCcySwap::arguments, ConstNotionalCrossCcySwap::results> {};
-} // namespace QuantLib
+
+class ConstNotionalCrossCurrencySwap::engine
+    : public GenericEngine<ConstNotionalCrossCurrencySwap::arguments,
+                           ConstNotionalCrossCurrencySwap::results> {};
+
+}
 
 #endif

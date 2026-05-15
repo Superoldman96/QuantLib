@@ -3,7 +3,6 @@
 /*
  Copyright (C) 2018 Quaternion Risk Management Ltd
  Copyright (C) 2025 Paolo D'Elia
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -19,25 +18,24 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file ql/instruments/constnotionalcrossccyfixfloatswap.hpp
-    \brief Cross currency fixed vs float swap instrument
-    \ingroup instruments
+/*! \file constnotionalcrosscurrencyfixedvsfloatingswap.hpp
+    \brief Cross-currency fixed-vs-floating swap
 */
 
-#ifndef quantlib_cross_ccy_fix_float_swap_hpp
-#define quantlib_cross_ccy_fix_float_swap_hpp
+#ifndef quantlib_cross_currency_fix_vs_floating_swap_hpp
+#define quantlib_cross_currency_fix_vs_floating_swap_hpp
 
 #include <ql/indexes/iborindex.hpp>
 #include <ql/time/schedule.hpp>
-#include <ql/instruments/constnotionalcrossccyswap.hpp>
+#include <ql/instruments/constnotionalcrosscurrencyswap.hpp>
 
 namespace QuantLib {
 
-/*! Cross currency fixed vs float swap
+/*! Cross-currency fixed-vs-floating swap
     \ingroup instruments
 */
-class ConstNotionalCrossCcyFixFloatSwap : public ConstNotionalCrossCcySwap {
-public:
+class ConstNotionalCrossCurrencyFixedVsFloatingSwap : public ConstNotionalCrossCurrencySwap {
+  public:
     class arguments;
     class results;
 
@@ -72,7 +70,7 @@ public:
         \param floatLockoutDays      Optional lockout period (in business days) before payment during which rate observations are frozen.
         \param floatIsAveraged       If true, use arithmetic averaging of overnight rates instead of compounding when building the floating leg.
     */
-    ConstNotionalCrossCcyFixFloatSwap(Type type, Real fixedNominal, const Currency& fixedCurrency,
+    ConstNotionalCrossCurrencyFixedVsFloatingSwap(Type type, Real fixedNominal, const Currency& fixedCurrency,
                          const Schedule& fixedSchedule, Rate fixedRate,
                          const DayCounter& fixedDayCount, BusinessDayConvention fixedPaymentBdc,
                          Natural fixedPaymentLag, const Calendar& fixedPaymentCalendar,
@@ -136,13 +134,13 @@ public:
     }
     //@}
 
-protected:
+  protected:
     //! \name Instrument interface
     //@{
     void setupExpired() const override;
     //@}
 
-private:
+  private:
     Type type_;
 
     Real fixedNominal_;
@@ -172,22 +170,22 @@ private:
     mutable Spread fairSpread_;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcyFixFloatSwap::arguments : public ConstNotionalCrossCcySwap::arguments {
-public:
+
+class ConstNotionalCrossCurrencyFixedVsFloatingSwap::arguments : public ConstNotionalCrossCurrencySwap::arguments {
+  public:
     Rate fixedRate;
     Spread spread;
     void validate() const override;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcyFixFloatSwap::results : public ConstNotionalCrossCcySwap::results {
-public:
+
+class ConstNotionalCrossCurrencyFixedVsFloatingSwap::results : public ConstNotionalCrossCurrencySwap::results {
+  public:
     Rate fairFixedRate;
     Spread fairSpread;
     void reset() override;
 };
 
-} // namespace QuantLib
+}
 
 #endif

@@ -3,7 +3,6 @@
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
  Copyright (C) 2025 Paolo D'Elia
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -23,11 +22,11 @@
 #include <ql/cashflows/cashflows.hpp>
 #include <ql/cashflows/simplecashflow.hpp>
 #include <ql/cashflows/overnightindexedcoupon.hpp>
-#include <ql/instruments/constnotionalcrossccybasisswap.hpp>
+#include <ql/instruments/constnotionalcrosscurrencybasisswap.hpp>
 
 namespace QuantLib  {
 
-ConstNotionalCrossCcyBasisSwap::ConstNotionalCrossCcyBasisSwap(Real payNominal, const Currency& payCurrency, const Schedule& paySchedule,
+ConstNotionalCrossCurrencyBasisSwap::ConstNotionalCrossCurrencyBasisSwap(Real payNominal, const Currency& payCurrency, const Schedule& paySchedule,
                                      const ext::shared_ptr<IborIndex>& payIndex, Spread paySpread, Real payGearing,
                                      Real recNominal, const Currency& recCurrency, const Schedule& recSchedule,
                                      const ext::shared_ptr<IborIndex>& recIndex, Spread recSpread, Real recGearing,
@@ -36,7 +35,7 @@ ConstNotionalCrossCcyBasisSwap::ConstNotionalCrossCcyBasisSwap(Real payNominal, 
                                      ext::optional<bool> payIsAveraged, ext::optional<bool> recIncludeSpread,
                                      ext::optional<Natural> recLookback, ext::optional<Size> recLockoutDays,
                                      ext::optional<bool> recIsAveraged, const bool telescopicValueDates)
-    : ConstNotionalCrossCcySwap(2), payNominal_(payNominal), payCurrency_(payCurrency), paySchedule_(paySchedule),
+    : ConstNotionalCrossCurrencySwap(2), payNominal_(payNominal), payCurrency_(payCurrency), paySchedule_(paySchedule),
       payIndex_(payIndex), paySpread_(paySpread), payGearing_(payGearing), recNominal_(recNominal),
       recCurrency_(recCurrency), recSchedule_(recSchedule), recIndex_(recIndex), recSpread_(recSpread),
       recGearing_(recGearing), payPaymentLag_(payPaymentLag), recPaymentLag_(recPaymentLag),
@@ -48,7 +47,7 @@ ConstNotionalCrossCcyBasisSwap::ConstNotionalCrossCcyBasisSwap(Real payNominal, 
     initialize();
 }
 
-void ConstNotionalCrossCcyBasisSwap::initialize() {
+void ConstNotionalCrossCurrencyBasisSwap::initialize() {
     // Pay leg
     if (auto on = ext::dynamic_pointer_cast<OvernightIndex>(payIndex_)) {
         // ON leg
@@ -105,11 +104,11 @@ void ConstNotionalCrossCcyBasisSwap::initialize() {
                                  CashFlows::maturityDate(legs_[1]));
 
     // Add notional exchanges on payLeg
-    ConstNotionalCrossCcySwap::addNotionalExchangesToLeg(legs_[0], paySchedule_.calendar(), earliestDate, maturityDate,
+    ConstNotionalCrossCurrencySwap::addNotionalExchangesToLeg(legs_[0], paySchedule_.calendar(), earliestDate, maturityDate,
                                             payPaymentLag_, paySchedule_.businessDayConvention(), payNominal_);
 
     // Add notional exchanges on recLeg
-    ConstNotionalCrossCcySwap::addNotionalExchangesToLeg(legs_[1], recSchedule_.calendar(), earliestDate, maturityDate,
+    ConstNotionalCrossCurrencySwap::addNotionalExchangesToLeg(legs_[1], recSchedule_.calendar(), earliestDate, maturityDate,
                                             recPaymentLag_, recSchedule_.businessDayConvention(), recNominal_);
 
     // Register the instrument with all cashflows on each leg.
@@ -121,14 +120,14 @@ void ConstNotionalCrossCcyBasisSwap::initialize() {
     }
 }
 
-void ConstNotionalCrossCcyBasisSwap::setupArguments(PricingEngine::arguments* args) const {
+void ConstNotionalCrossCurrencyBasisSwap::setupArguments(PricingEngine::arguments* args) const {
 
-    ConstNotionalCrossCcySwap::setupArguments(args);
+    ConstNotionalCrossCurrencySwap::setupArguments(args);
 
-    ConstNotionalCrossCcyBasisSwap::arguments* arguments = dynamic_cast<ConstNotionalCrossCcyBasisSwap::arguments*>(args);
+    ConstNotionalCrossCurrencyBasisSwap::arguments* arguments = dynamic_cast<ConstNotionalCrossCurrencyBasisSwap::arguments*>(args);
 
-    /* Returns here if e.g. args is ConstNotionalCrossCcySwap::arguments which
-       is the case if PricingEngine is a ConstNotionalCrossCcySwap::engine. */
+    /* Returns here if e.g. args is ConstNotionalCrossCurrencySwap::arguments which
+       is the case if PricingEngine is a ConstNotionalCrossCurrencySwap::engine. */
     if (!arguments)
         return;
 
@@ -136,18 +135,18 @@ void ConstNotionalCrossCcyBasisSwap::setupArguments(PricingEngine::arguments* ar
     arguments->recSpread = recSpread_;
 }
 
-void ConstNotionalCrossCcyBasisSwap::fetchResults(const PricingEngine::results* r) const {
+void ConstNotionalCrossCurrencyBasisSwap::fetchResults(const PricingEngine::results* r) const {
 
-    ConstNotionalCrossCcySwap::fetchResults(r);
+    ConstNotionalCrossCurrencySwap::fetchResults(r);
 
-    const ConstNotionalCrossCcyBasisSwap::results* results = dynamic_cast<const ConstNotionalCrossCcyBasisSwap::results*>(r);
+    const ConstNotionalCrossCurrencyBasisSwap::results* results = dynamic_cast<const ConstNotionalCrossCurrencyBasisSwap::results*>(r);
     if (results) {
         /* If PricingEngine::results are of type
-           ConstNotionalCrossCcyBasisSwap::results */
+           ConstNotionalCrossCurrencyBasisSwap::results */
         fairPaySpread_ = results->fairPaySpread;
         fairRecSpread_ = results->fairRecSpread;
     } else {
-        /* If not, e.g. if the engine is a ConstNotionalCrossCcySwap::engine */
+        /* If not, e.g. if the engine is a ConstNotionalCrossCurrencySwap::engine */
         fairPaySpread_ = Null<Spread>();
         fairRecSpread_ = Null<Spread>();
     }
@@ -164,21 +163,22 @@ void ConstNotionalCrossCcyBasisSwap::fetchResults(const PricingEngine::results* 
     }
 }
 
-void ConstNotionalCrossCcyBasisSwap::setupExpired() const {
-    ConstNotionalCrossCcySwap::setupExpired();
+void ConstNotionalCrossCurrencyBasisSwap::setupExpired() const {
+    ConstNotionalCrossCurrencySwap::setupExpired();
     fairPaySpread_ = Null<Spread>();
     fairRecSpread_ = Null<Spread>();
 }
 
-void ConstNotionalCrossCcyBasisSwap::arguments::validate() const {
-    ConstNotionalCrossCcySwap::arguments::validate();
+void ConstNotionalCrossCurrencyBasisSwap::arguments::validate() const {
+    ConstNotionalCrossCurrencySwap::arguments::validate();
     QL_REQUIRE(paySpread != Null<Spread>(), "Pay spread cannot be null");
     QL_REQUIRE(recSpread != Null<Spread>(), "Rec spread cannot be null");
 }
 
-void ConstNotionalCrossCcyBasisSwap::results::reset() {
-    ConstNotionalCrossCcySwap::results::reset();
+void ConstNotionalCrossCurrencyBasisSwap::results::reset() {
+    ConstNotionalCrossCurrencySwap::results::reset();
     fairPaySpread = Null<Spread>();
     fairRecSpread = Null<Spread>();
 }
+
 } // namespace QuantLib

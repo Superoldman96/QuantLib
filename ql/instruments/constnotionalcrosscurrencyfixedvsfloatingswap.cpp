@@ -3,7 +3,6 @@
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
  Copyright (C) 2025 Paolo D'Elia
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -19,7 +18,7 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-#include <ql/instruments/constnotionalcrossccyfixfloatswap.hpp>
+#include <ql/instruments/constnotionalcrosscurrencyfixedvsfloatingswap.hpp>
 #include <ql/cashflows/cashflows.hpp>
 #include <ql/cashflows/fixedratecoupon.hpp>
 #include <ql/cashflows/iborcoupon.hpp>
@@ -28,7 +27,7 @@
 
 namespace QuantLib {
 
-ConstNotionalCrossCcyFixFloatSwap::ConstNotionalCrossCcyFixFloatSwap(
+ConstNotionalCrossCurrencyFixedVsFloatingSwap::ConstNotionalCrossCurrencyFixedVsFloatingSwap(
     Type type, Real fixedNominal, const Currency& fixedCurrency, const Schedule& fixedSchedule, Rate fixedRate,
     const DayCounter& fixedDayCount, BusinessDayConvention fixedPaymentBdc, Natural fixedPaymentLag,
     const Calendar& fixedPaymentCalendar, Real floatNominal, const Currency& floatCurrency,
@@ -36,7 +35,7 @@ ConstNotionalCrossCcyFixFloatSwap::ConstNotionalCrossCcyFixFloatSwap(
     BusinessDayConvention floatPaymentBdc, Natural floatPaymentLag, const Calendar& floatPaymentCalendar,
     const bool telescopicValueDates, ext::optional<bool> floatIncludeSpread, ext::optional<Natural> floatLookbackDays,
     ext::optional<Size> floatLockoutDays, ext::optional<bool> floatIsAveraged)
-    : ConstNotionalCrossCcySwap(2), type_(type), fixedNominal_(fixedNominal), fixedCurrency_(fixedCurrency),
+    : ConstNotionalCrossCurrencySwap(2), type_(type), fixedNominal_(fixedNominal), fixedCurrency_(fixedCurrency),
       fixedSchedule_(fixedSchedule), fixedRate_(fixedRate), fixedDayCount_(fixedDayCount),
       fixedPaymentBdc_(fixedPaymentBdc), fixedPaymentLag_(fixedPaymentLag), fixedPaymentCalendar_(fixedPaymentCalendar),
       floatNominal_(floatNominal), floatCurrency_(floatCurrency), floatSchedule_(floatSchedule),
@@ -88,11 +87,11 @@ ConstNotionalCrossCcyFixFloatSwap::ConstNotionalCrossCcyFixFloatSwap(
                                  CashFlows::maturityDate(fixedLeg));
 
     // Add notional exchanges on float Leg
-    ConstNotionalCrossCcySwap::addNotionalExchangesToLeg(floatLeg, floatPaymentCalendar_, earliestDate, maturityDate,
+    ConstNotionalCrossCurrencySwap::addNotionalExchangesToLeg(floatLeg, floatPaymentCalendar_, earliestDate, maturityDate,
                                             floatPaymentLag_, floatPaymentBdc_, floatNominal_);
     
     // Add notional exchanges on fixed leg
-    ConstNotionalCrossCcySwap::addNotionalExchangesToLeg(fixedLeg, fixedPaymentCalendar_, earliestDate, maturityDate,
+    ConstNotionalCrossCurrencySwap::addNotionalExchangesToLeg(fixedLeg, fixedPaymentCalendar_, earliestDate, maturityDate,
                                             fixedPaymentLag_, fixedPaymentBdc_, fixedNominal_);
 
     // Deriving from cross currency swap where:
@@ -118,21 +117,21 @@ ConstNotionalCrossCcyFixFloatSwap::ConstNotionalCrossCcyFixFloatSwap(
     }
 }
 
-void ConstNotionalCrossCcyFixFloatSwap::setupArguments(PricingEngine::arguments* a) const {
-    ConstNotionalCrossCcySwap::setupArguments(a);
-    if (ConstNotionalCrossCcyFixFloatSwap::arguments* args = dynamic_cast<ConstNotionalCrossCcyFixFloatSwap::arguments*>(a)) {
+void ConstNotionalCrossCurrencyFixedVsFloatingSwap::setupArguments(PricingEngine::arguments* a) const {
+    ConstNotionalCrossCurrencySwap::setupArguments(a);
+    if (ConstNotionalCrossCurrencyFixedVsFloatingSwap::arguments* args = dynamic_cast<ConstNotionalCrossCurrencyFixedVsFloatingSwap::arguments*>(a)) {
         args->fixedRate = fixedRate_;
         args->spread = floatSpread_;
     }
 }
 
-void ConstNotionalCrossCcyFixFloatSwap::fetchResults(const PricingEngine::results* r) const {
+void ConstNotionalCrossCurrencyFixedVsFloatingSwap::fetchResults(const PricingEngine::results* r) const {
 
-    ConstNotionalCrossCcySwap::fetchResults(r);
+    ConstNotionalCrossCurrencySwap::fetchResults(r);
 
-    // Depending on the pricing engine used, we may have ConstNotionalCrossCcyFixFloatSwap::results
-    if (const ConstNotionalCrossCcyFixFloatSwap::results* res = dynamic_cast<const ConstNotionalCrossCcyFixFloatSwap::results*>(r)) {
-        // If we have ConstNotionalCrossCcyFixFloatSwap::results from the pricing engine
+    // Depending on the pricing engine used, we may have ConstNotionalCrossCurrencyFixedVsFloatingSwap::results
+    if (const ConstNotionalCrossCurrencyFixedVsFloatingSwap::results* res = dynamic_cast<const ConstNotionalCrossCurrencyFixedVsFloatingSwap::results*>(r)) {
+        // If we have ConstNotionalCrossCurrencyFixedVsFloatingSwap::results from the pricing engine
         fairFixedRate_ = res->fairFixedRate;
         fairSpread_ = res->fairSpread;
     } else {
@@ -153,20 +152,20 @@ void ConstNotionalCrossCcyFixFloatSwap::fetchResults(const PricingEngine::result
         fairSpread_ = floatSpread_ - NPV_ / (legBPS_[idxFloat] / basisPoint);
 }
 
-void ConstNotionalCrossCcyFixFloatSwap::setupExpired() const {
-    ConstNotionalCrossCcySwap::setupExpired();
+void ConstNotionalCrossCurrencyFixedVsFloatingSwap::setupExpired() const {
+    ConstNotionalCrossCurrencySwap::setupExpired();
     fairFixedRate_ = Null<Rate>();
     fairSpread_ = Null<Spread>();
 }
 
-void ConstNotionalCrossCcyFixFloatSwap::arguments::validate() const {
-    ConstNotionalCrossCcySwap::arguments::validate();
+void ConstNotionalCrossCurrencyFixedVsFloatingSwap::arguments::validate() const {
+    ConstNotionalCrossCurrencySwap::arguments::validate();
     QL_REQUIRE(fixedRate != Null<Rate>(), "Fixed rate cannot be null");
     QL_REQUIRE(spread != Null<Spread>(), "Spread cannot be null");
 }
 
-void ConstNotionalCrossCcyFixFloatSwap::results::reset() {
-    ConstNotionalCrossCcySwap::results::reset();
+void ConstNotionalCrossCurrencyFixedVsFloatingSwap::results::reset() {
+    ConstNotionalCrossCurrencySwap::results::reset();
     fairFixedRate = Null<Rate>();
     fairSpread = Null<Spread>();
 }

@@ -2,7 +2,6 @@
 
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -18,15 +17,14 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
+#include <ql/pricingengines/swap/discountingconstnotionalcrosscurrencyswapengine.hpp>
 #include <ql/cashflows/cashflows.hpp>
 #include <ql/exchangerate.hpp>
 #include <ql/utilities/dataformatters.hpp>
 
-#include <ql/pricingengines/swap/constnotionalcrossccyswapengine.hpp>
-
 namespace QuantLib {
 
-ConstNotionalCrossCcySwapEngine::ConstNotionalCrossCcySwapEngine(const Currency& domesticCcy, const Handle<YieldTermStructure>& domesticCcyDiscountcurve,
+DiscountingConstNotionalCrossCurrencySwapEngine::DiscountingConstNotionalCrossCurrencySwapEngine(const Currency& domesticCcy, const Handle<YieldTermStructure>& domesticCcyDiscountcurve,
                                        const Currency& foreignCcy, const Handle<YieldTermStructure>& foreignCcyDiscountcurve,
                                        const Handle<Quote>& spotFX, ext::optional<bool> includeSettlementDateFlows,
                                        const Date& settlementDate, const Date& npvDate, const Date& spotFXSettleDate)
@@ -40,7 +38,7 @@ ConstNotionalCrossCcySwapEngine::ConstNotionalCrossCcySwapEngine(const Currency&
     registerWith(spotFX_);
 }
 
-void ConstNotionalCrossCcySwapEngine::calculate() const {
+void DiscountingConstNotionalCrossCurrencySwapEngine::calculate() const {
 
     QL_REQUIRE(!domesticCcyDiscountcurve_.empty() && !foreignCcyDiscountcurve_.empty(),
                "Discounting term structure handle is empty.");
@@ -89,7 +87,7 @@ void ConstNotionalCrossCcySwapEngine::calculate() const {
     results_.legBPS.resize(numLegs);
     results_.startDiscounts.resize(numLegs);
     results_.endDiscounts.resize(numLegs);
-    // - ConstNotionalCrossCcySwap::Results
+    // - ConstNotionalCrossCurrencySwap::Results
     results_.inCcyLegNPV.resize(numLegs);
     results_.inCcyLegBPS.resize(numLegs);
     results_.npvDateDiscounts.resize(numLegs);

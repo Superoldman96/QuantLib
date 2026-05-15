@@ -2,7 +2,6 @@
 
 /*
  Copyright (C) 2018 Quaternion Risk Management Ltd
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -27,8 +26,8 @@
 #include <ql/time/calendars/all.hpp>
 #include <ql/time/daycounters/actual360.hpp>
 #include <ql/types.hpp>
-#include <ql/instruments/constnotionalcrossccyfixfloatswap.hpp>
-#include <ql/pricingengines/swap/constnotionalcrossccyswapengine.hpp>
+#include <ql/instruments/constnotionalcrosscurrencyfixedvsfloatingswap.hpp>
+#include <ql/pricingengines/swap/discountingconstnotionalcrosscurrencyswapengine.hpp>
 
 using namespace std;
 using namespace boost::unit_test_framework;
@@ -36,7 +35,7 @@ using namespace QuantLib;
 
 BOOST_FIXTURE_TEST_SUITE(QuantLibTests, TopLevelFixture)
 
-BOOST_AUTO_TEST_SUITE(ConstNotionalCrossCcyFixFloatSwapTest)
+BOOST_AUTO_TEST_SUITE(ConstNotionalCrossCurrencyFixedVsFloatingSwapTest)
 
 #define CHECK_XCCY_SWAP_RESULT(what, calculated, expected, tolerance)   \
     if (std::fabs(calculated-expected) > tolerance) { \
@@ -216,7 +215,7 @@ Handle<YieldTermStructure> tryDiscountCurve() {
     return Handle<YieldTermStructure>(ext::make_shared<DiscountCurve>(dates, dfs, dayCounter));
 }
 
-ext::shared_ptr<ConstNotionalCrossCcyFixFloatSwap> makeFixFloatXCCYSwap(Rate spotFx, Rate rate, Spread spread) {
+ext::shared_ptr<ConstNotionalCrossCurrencyFixedVsFloatingSwap> makeFixFloatXCCYSwap(Rate spotFx, Rate rate, Spread spread) {
 
     // USD nominal
     Real usdNominal = 10000000.0;
@@ -243,10 +242,10 @@ ext::shared_ptr<ConstNotionalCrossCcyFixFloatSwap> makeFixFloatXCCYSwap(Rate spo
     auto index = ext::make_shared<USDLibor>(3 * Months, usdProjectionCurve());
 
     // Create swap
-    return ext::shared_ptr<ConstNotionalCrossCcyFixFloatSwap>(
-        new ConstNotionalCrossCcyFixFloatSwap(ConstNotionalCrossCcyFixFloatSwap::Payer, usdNominal * spotFx, TRYCurrency(), fixedSchedule, rate,
+    return ext::make_shared<ConstNotionalCrossCurrencyFixedVsFloatingSwap>(
+                                 ConstNotionalCrossCurrencyFixedVsFloatingSwap::Payer, usdNominal * spotFx, TRYCurrency(), fixedSchedule, rate,
                                  Actual360(), payConvention, payLag, payCalendar, usdNominal, USDCurrency(),
-                                 floatSchedule, index, spread, payConvention, payLag, payCalendar));
+                                 floatSchedule, index, spread, payConvention, payLag, payCalendar);
 }
 
 
@@ -265,7 +264,7 @@ BOOST_AUTO_TEST_CASE(testFixFloatXCCYSwapPricing) {
 
     // Attach pricing engine
     auto fxSpotQuote = makeQuoteHandle(1.0 / spotFx);
-    auto engine = ext::make_shared<ConstNotionalCrossCcySwapEngine>(
+    auto engine = ext::make_shared<DiscountingConstNotionalCrossCurrencySwapEngine>(
         USDCurrency(), usdDiscountCurve(), TRYCurrency(), tryDiscountCurve(), fxSpotQuote);
     xccy->setPricingEngine(engine);
 

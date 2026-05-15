@@ -2,7 +2,6 @@
 
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -18,24 +17,21 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file ql/pricingengines/swap/constnotionalcrossccyswapengine.hpp
+/*! \file discountingconstnotionalcrosscurrencyswapengine.hpp
     \brief Cross currency swap engine
-
-        \ingroup engines
 */
 
-#ifndef quantlib_cross_ccy_swap_engine_hpp
-#define quantlib_cross_ccy_swap_engine_hpp
+#ifndef quantlib_discounting_cross_currency_swap_engine_hpp
+#define quantlib_discounting_cross_currency_swap_engine_hpp
 
 #include <ql/handle.hpp>
-#include <ql/instruments/constnotionalcrossccyswap.hpp>
+#include <ql/instruments/constnotionalcrosscurrencyswap.hpp>
 #include <ql/termstructures/yieldtermstructure.hpp>
 #include <ql/optional.hpp>
 
 namespace QuantLib {
 
-//! Cross currency swap engine
-
+//! Discounting cross-currency swap engine
 /*! This class implements an engine for pricing swaps comprising legs that
     involve two currencies. The npv is expressed in domesticCcy. The given currencies
     domesticCcy and foreignCcy are matched to the correct swap legs. The evaluation date is the
@@ -43,8 +39,8 @@ namespace QuantLib {
 
    \ingroup engines
 */
-class ConstNotionalCrossCcySwapEngine : public ConstNotionalCrossCcySwap::engine {
-public:
+class DiscountingConstNotionalCrossCurrencySwapEngine : public ConstNotionalCrossCurrencySwap::engine {
+  public:
     //! \name Constructors
     //@{
     /*! \param domesticCcy
@@ -70,7 +66,7 @@ public:
         \param spotFXSettleDate
                FX conversion as of this date if specified explicitly
     */
-    ConstNotionalCrossCcySwapEngine(const Currency& domesticCcy, const Handle<YieldTermStructure>& domesticCcyDiscountCurve,
+    DiscountingConstNotionalCrossCurrencySwapEngine(const Currency& domesticCcy, const Handle<YieldTermStructure>& domesticCcyDiscountCurve,
                        const Currency& foreignCcy, const Handle<YieldTermStructure>& foreignCcyDiscountCurve,
                        const Handle<Quote>& spotFX, ext::optional<bool> includeSettlementDateFlows = ext::nullopt,
                        const Date& settlementDate = Date(), const Date& npvDate = Date(), const Date& spotFXSettleDate = Date());
@@ -92,7 +88,7 @@ public:
     const Handle<Quote>& spotFX() const { return spotFX_; }
     //@}
 
-private:
+  private:
     Currency domesticCcy_;
     Handle<YieldTermStructure> domesticCcyDiscountcurve_;
     Currency foreignCcy_;
@@ -103,6 +99,7 @@ private:
     Date npvDate_;
     Date spotFXSettleDate_;
 };
-} // namespace QuantLib
+
+}
 
 #endif

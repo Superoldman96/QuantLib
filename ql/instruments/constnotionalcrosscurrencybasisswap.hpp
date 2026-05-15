@@ -3,7 +3,6 @@
 /*
  Copyright (C) 2016 Quaternion Risk Management Ltd
  Copyright (C) 2025 Paolo D'Elia
- All rights reserved.
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -19,31 +18,30 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file constnotionalcrossccybasisswap.hpp
-    \brief Cross currency basis swap instrument
-
-        \ingroup instruments
+/*! \file constnotionalcrosscurrencybasisswap.hpp
+    \brief Cross-currency basis swap
 */
 
-#ifndef quantlib_cross_ccy_basis_swap_hpp
-#define quantlib_cross_ccy_basis_swap_hpp
+#ifndef quantlib_cross_currency_basis_swap_hpp
+#define quantlib_cross_currency_basis_swap_hpp
 
 #include <ql/indexes/iborindex.hpp>
 #include <ql/time/schedule.hpp>
-#include <ql/instruments/constnotionalcrossccyswap.hpp>
+#include <ql/instruments/constnotionalcrosscurrencyswap.hpp>
 
 namespace QuantLib {
 
-//! Cross currency basis swap
+//! Cross-currency basis swap
 /*! The first leg holds the pay currency cashflows and second leg holds
     the receive currency cashflows.
 
-            \ingroup instruments
+    \ingroup instruments
 */
-class ConstNotionalCrossCcyBasisSwap : public ConstNotionalCrossCcySwap {
-public:
+class ConstNotionalCrossCurrencyBasisSwap : public ConstNotionalCrossCurrencySwap {
+  public:
     class arguments;
     class results;
+
     //! \name Constructors
     //@{
     /*!
@@ -75,7 +73,7 @@ public:
         \param recIsAveraged      If true, use arithmetic averaging of overnight rates instead of compounding when building the rec leg (defaul: 0).
         \param telescopicValueDates Flag indicating whether telescopic value dates are used (default: false).
     */
-    ConstNotionalCrossCcyBasisSwap(
+    ConstNotionalCrossCurrencyBasisSwap(
         Real payNominal, const Currency& payCurrency, const Schedule& paySchedule,
         const ext::shared_ptr<IborIndex>& payIndex, Spread paySpread, Real payGearing, Real recNominal,
         const Currency& recCurrency, const Schedule& recSchedule, const ext::shared_ptr<IborIndex>& recIndex,
@@ -122,13 +120,13 @@ public:
     }
     //@}
 
-protected:
+  protected:
     //! \name Instrument interface
     //@{
     void setupExpired() const override;
     //@}
 
-private:
+  private:
     void initialize();
 
     Real payNominal_;
@@ -162,21 +160,22 @@ private:
     mutable Spread fairRecSpread_;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcyBasisSwap::arguments : public ConstNotionalCrossCcySwap::arguments {
-public:
+
+class ConstNotionalCrossCurrencyBasisSwap::arguments : public ConstNotionalCrossCurrencySwap::arguments {
+  public:
     Spread paySpread;
     Spread recSpread;
     void validate() const override;
 };
 
-//! \ingroup instruments
-class ConstNotionalCrossCcyBasisSwap::results : public ConstNotionalCrossCcySwap::results {
-public:
+
+class ConstNotionalCrossCurrencyBasisSwap::results : public ConstNotionalCrossCurrencySwap::results {
+  public:
     Spread fairPaySpread;
     Spread fairRecSpread;
     void reset() override;
 };
-} // namespace QuantLib
+
+}
 
 #endif
